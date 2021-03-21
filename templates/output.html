@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{{search_item}} - 
+
+{% endblock title %}
+
+{% block body %}
+
+<br><br><br> 
+
+<div class="container">
+	<h1 class="display-6">My Molecule</h1> 
+</div>
+<form method= "post">
+<div class="input-group input-group-md mb-3 container">
+  
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-md" value="{{search_item}}" name="search_item">
+
+
+<button type="submit" class="btn btn-primary btn-md float-right">Go !</button></div>
+</form>
+
+<br>
+
+<center>
+<div class="container">
+<h2 >{{search_item}} --
+{% if naam != None %}
+{% for i in naam %}
+{% if i not in "1234567890" %}
+{{i}}
+{% else %}
+<sub>{{i}}</sub>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if table != None %}
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-plus-fill float-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+</svg>
+{% endif %}
+
+
+</h2>
+</div>
+
+</center>
+<center>
+    {% if "." in image %}
+	<img src={{image}}/>
+    {% endif %}
+</center>
+
+
+<br>
+</center>
+{% if table != None %}
+<table class="table table-dark table-hover container">
+
+<tr> 
+    <th>Element</th> 
+    <th>Symbol</th>
+    <th>Atomic No.</th>
+    <th>Atomic Mass</th>
+	<th>No. Of Atoms</th>
+</tr>
+	
+    {% for item in table %}
+        <tr> 
+        	<td>{{item[0]}}</td> 
+        	<td>{{item[1]}}</td>
+        	<td>{{item[2]}}</td>
+        	<td>{{item[3]}}</td>
+        	<td>{{item[4]}}</td>
+        </tr>
+    {% endfor %}
+
+
+
+</table>
+{% else %}
+    <h2 class="container text-center">
+	Invalid Molecular Formula!</h2>
+
+{% endif %}
+</center>
+<br>
+{% if mass_number != None %}
+<h2 class="container text-center">
+	Molecular Mass = 
+{{mass_number}}</h2>
+{% endif %}
+<br>
+<br>
+<br>
+<br>
+{% endblock body %}
