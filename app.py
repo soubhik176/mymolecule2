@@ -341,7 +341,7 @@ def code_gen():
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 20))
     return res
 
-def email_sender(email,res=code_gen()):
+def email_sender(email,res=code_gen(),process):
 
 
 	'''
@@ -376,13 +376,17 @@ def email_sender(email,res=code_gen()):
 	  
 	# terminating the session
 	s.close()'''
+	if process=="verification":
+		y="verification"
+	elif process=="resetsuccess":
+		y="resetsuccess"
 	server = smtplib.SMTP("smtp.gmail.com",587)
 	server.ehlo() # Can be omitted
 	server.starttls() # Secure the connection
 	server.login('sahisoubhik@gmail.com',"soubhiksahihai")
 	message = """
 	From: From Person <from@fromdomain.com>
-	
+
 	To: To Person <to@todomain.com>
 
 	Subject: verify
@@ -391,8 +395,8 @@ def email_sender(email,res=code_gen()):
 
 
 	This is a verification e-mail message.
-	<a href="https://my-molecule2.herokuapp.com/{}/{}">
-	link</a>""".format(email, res)
+	<a href="https://my-molecule2.herokuapp.com/{y}/{x}/{z}">
+	link</a>""".format(y=y,x=email,z= res)
 	server.sendmail('soubhik176@gmail.com',email, message)
 	return res
 
