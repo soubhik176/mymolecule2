@@ -341,7 +341,7 @@ def code_gen():
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 20))
     return res
 
-def email_sender(email,res=code_gen(),process):
+def email_sender(process,email,res=code_gen()):
 
 
 	'''
@@ -599,7 +599,7 @@ def signup():
 
                 elif present is not None:
                     update_signup=Signups.query.filter_by(email=email).first()
-                    update_signup.verification_code = email_sender(email)
+                    update_signup.verification_code = email_sender(email=email, process='verification')
                     update_signup.password = password
                     update_signup.name = name
 
@@ -631,7 +631,7 @@ def forgotpassword():
 
     	if update_user.email == email:
 
-    		new_forgot = Forgots(email=email, verification_code=email_sender(email))
+    		new_forgot = Forgots(email=email, verification_code=email_sender(email=email, process='resetsuccess' ))
     		db.session.add(new_forgot)
     		db.session.commit()
 
