@@ -397,7 +397,7 @@ def email_sender(process,email,res=code_gen()):
 	This is a verification e-mail message.
 
 
-	"https://my-molecule2.herokuapp.com/{y}/{x}/{z}"
+	https://my-molecule2.herokuapp.com/{y}/{x}/{z}
 	""".format(y=y,x=email,z= res)
 	server.sendmail('soubhik176@gmail.com',email, message)
 	return res
