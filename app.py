@@ -383,7 +383,7 @@ def email_sender(process,email,res=code_gen()):
 	server = smtplib.SMTP("smtp.gmail.com",587)
 	server.ehlo() # Can be omitted
 	server.starttls() # Secure the connection
-	server.login('sahisoubhik@gmail.com',"soubhiksahihai")
+	server.login('@gmail.com',"password")
 	message = """
 	From: From Person <from@fromdomain.com>
 
