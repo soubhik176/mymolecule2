@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+BookMarks - 
+{% endblock title %}
+ 
+{% block body %}
+<br><br><br> 
+
+<table class="table table-dark table-hover container">
+
+<tr> 
+    <th>Item</th> 
+    <th>Time</th>
+    <th>Action</th>
+
+</tr>
+  
+    {% for item in bookmark_list %}
+        <tr> 
+          <td><a class="link-light" href="{{ url_for('redir', search_item=bookmark_list[item] ) }}">{{bookmark_list[item]}}</a></td> 
+          <td>{{item}}</td>
+          <td><a href="{{ url_for('removemark', date_time=item, place='bookmarks') }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+
+        </tr>
+    {% endfor %}
+
+
+
+</table>
+</div>
+
+{% endblock body %}
+<br><br><br>

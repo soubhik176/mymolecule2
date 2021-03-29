@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Verification - 
+{% endblock title %}
+ 
+{% block body %}
+<br><br><br> 
+{% if success == True %}
+<div class="card text-center container">
+  <div class="card-header">
+    Email Verified !
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Email Verified!</h5>
+    <p class="card-text">Now you can Sign In in My Molecule.</p>
+    <a href="{{ url_for('signin') }}" class="btn btn-primary">Sign In</a>
+  </div>
+
+</div>
+{% elif success == False %}
+<div class="card text-center container">
+  <div class="card-header">
+    Error !
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Page Expired!</h5>
+    <p class="card-text">This page was expired so its not visible.</p>
+
+  </div>
+
+</div>
+{% endif %}
+{% endblock body %}
+<br><br><br>
