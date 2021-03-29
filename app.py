@@ -595,7 +595,7 @@ def signup():
                     #c.execute("INSERT INTO SIGNUP (email, password, verification_code) VALUES ({}, {}, {});".format("bitadox958@naymio.com", str(password), res))
                     #conn.commit()
 
-                    new_signup = Signups(email=email, password=password, name=name, verification_code=email_sender(email))
+                    new_signup = Signups(email=email, password=password, name=name, verification_code=email_sender(email=email, process='verification'))
                     db.session.add(new_signup)
                     db.session.commit()
 
