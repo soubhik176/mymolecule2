@@ -454,6 +454,10 @@ def index():
 					else:
 						listed=True
 					return render_template("output.html", search_item=search_item, table=table, mass_number=mass_number, naam=naam, image=img, listed=listed)
+
+				else:
+					listed=False
+					return render_template("output.html", search_item=search_item, table=table, mass_number=mass_number, naam=naam, image=img, listed=listed)
 			else:
 				return render_template("output.html", search_item=search_item, table=table, mass_number=mass_number, naam=naam, image=img)
 	else:
