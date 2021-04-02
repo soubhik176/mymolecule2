@@ -27,7 +27,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('bookmarks') }}">Bookmarks</a>
+            <a class="nav-link active" aria-current="page" href="{{ url_for('bookmarks') }}"><button type="button" class="btn btn-primary btn-sm">Bookmarks</button></a>
           </li>
 
           
@@ -55,6 +55,17 @@
 {% block body %}
 
 {% endblock body %}
+<center>
+  <br>
+  <br>
+  <br>
+  <br>
+<a class="btn btn-primary" href="{{ url_for('feedback') }}" role="button">Feedback and suggestions</a>
+  <br>
+  <br>
+  <br>
+  <br>
+</center>
 </main>
 <footer class="footer mt-auto py-3 bg-light fixed-bottom">
   <div class="container">

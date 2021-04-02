@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+ 
+{% block title %}
+Sign In - 
+{% endblock title %}
+
+{% block body %}
+<br><br><br> 
+
+{% if alert == True %}
+<div class="alert alert-warning alert-dismissible fade show container" role="alert">
+  <strong>Something wrong!</strong> Please fill the below fields properly!
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert==False %}
+<div class="alert alert-warning alert-dismissible fade show container" role="alert">
+  <strong>Thank you!</strong> We would soon reply. 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+<form method= "post">
+   <div class="mb-3 container">
+    <label for="exampleInputEmail1" class="form-label ">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+    
+  </div>
+<div class="mb-3 container">
+  <label for="exampleFormControlTextarea1" class="form-label">Feedback: </label>
+  <textarea name = "feedback" class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+</div>
+
+    <center>
+  <div >
+<button type="submit" class="btn btn-primary">Submit</button>
+
+</div>
+
+</center>
+</form>
+
+
+
+
+<br><br><br>
+{% endblock body %}

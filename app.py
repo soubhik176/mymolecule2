@@ -395,13 +395,32 @@ def email_sender(process,email,res=code_gen()):
 	<h2>
 	<a href="https://my-molecule2.herokuapp.com/{y}/{x}/{z}"> verification link</a>
 	</h2>
-	<center>
+	</center>
 	""".format(y=y,x=email,z= res)
 	msg=MIMEText(message, 'html')
 	msg['Subject']= y+" "+"Mymolecule"
 	server.sendmail('soubhik176@gmail.com',email, msg.as_string())
 	return res
 
+
+
+def feed_sender(email, feed):
+
+
+	server = smtplib.SMTP("smtp.gmail.com",587)
+	server.ehlo() # Can be omitted
+	server.starttls() # Secure the connection
+	server.login('sahisoubhik@gmail.com',"soubhiksahihai")
+	message = u"""
+	<center>
+	{email}<br><br>
+	{feed}
+	</center>
+	""".format(feed=feed, email=email)
+	msg=MIMEText(message, 'html')
+	msg['Subject']="Mymolecule feedback -- "+email
+	server.sendmail('soubhik176@gmail.com','hellosoubhik@protonmail.com', msg.as_string())
+	
 
 
 
@@ -718,7 +737,22 @@ def verification(email, verification_code):
 
 
 
+@app.route('/feedback', methods=["POST", "GET"])
+def feedback():
 
+
+	if request.method == "POST" :
+		feed=request.form['feedback']
+		email=request.form['email']
+		if feed.strip() == "" or email.strip() == "":
+			return render_template('feedback.html', alert=True)
+		else:
+			feed_sender(email=email, feed= feed)
+			return render_template('feedback.html', alert=False)
+
+
+	else:
+		return render_template('feedback.html')
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
