@@ -11,7 +11,7 @@ import smtplib
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
-
+from email.mime.text import MIMEText
 
 """
 conn=sqlite3.connect('mymolecule.db')
@@ -384,22 +384,22 @@ def email_sender(process,email,res=code_gen()):
 	server.ehlo() # Can be omitted
 	server.starttls() # Secure the connection
 	server.login('sahisoubhik@gmail.com',"soubhiksahihai")
-	message = """
-	From: From Person <from@fromdomain.com>
-
-	To: To Person <to@todomain.com>
-
-	Subject: verify
-
-	Content-type: text/html
+	message = u"""
 
 
-	This is a verification e-mail message.
-
-
-	https://my-molecule2.herokuapp.com/{y}/{x}/{z}
+	<center>
+	<h1>This is a verification e-mail message from my molecule</h1>
+	<h2>For email -- {x}</h2>
+	<br>
+	<br>
+	<h2>
+	<a href="https://my-molecule2.herokuapp.com/{y}/{x}/{z}"> verification link</a>
+	</h2>
+	<center>
 	""".format(y=y,x=email,z= res)
-	server.sendmail('soubhik176@gmail.com',email, message)
+	msg=MIMEText(message, 'html')
+	msg['Subject']= y+" "+"Mymolecule"
+	server.sendmail('soubhik176@gmail.com',email, msg.as_string())
 	return res
 
 
@@ -632,20 +632,28 @@ def forgotpassword():
     	email=request.form["email"]
     	update_user=Users.query.filter_by(email=email).first()
     	update_pass=Forgots.query.filter_by(email=email).first()
-    	if update_pass != None:
+    	
+    	if update_user == None:
     		return render_template('forgot_password/forgotpassword.html', alert=True)
-
-    	if update_user.email == email:
-
-    		new_forgot = Forgots(email=email, verification_code=email_sender(email=email, process='resetsuccess' ))
-    		db.session.add(new_forgot)
-    		db.session.commit()
-
-
-
-    		return render_template('forgot_password/forgotpassword.html', alert=False)
     	else:
-    		return render_template('forgot_password/forgotpassword.html', alert=True)
+
+	    	if update_pass != None and update_user.email == email:
+	    		update_pass.verification_code=email_sender(email=email, process='resetsuccess' )
+	    		db.session.commit()
+	    		return render_template('forgot_password/forgotpassword.html', alert=False)
+	    	
+
+	    	elif update_pass == None and update_user.email == email:
+
+	    		new_forgot = Forgots(email=email, verification_code=email_sender(email=email, process='resetsuccess' ))
+	    		db.session.add(new_forgot)
+	    		db.session.commit()
+
+
+
+	    		return render_template('forgot_password/forgotpassword.html', alert=False)
+    	'''else:
+    		return render_template('forgot_password/forgotpassword.html', alert=True)'''
     else :
         return render_template('forgot_password/forgotpassword.html')
 
@@ -676,7 +684,7 @@ def resetsuccess(email, verification_code):
 			return render_template('forgot_password/resetsuccess.html')
 
 	else:
-		return render_template('forgot_password/resetsuccess.html', alert=True)
+		return render_template('signup/verified.html', success=False)
 
 
 
