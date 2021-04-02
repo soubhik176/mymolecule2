@@ -203,7 +203,7 @@ def molecule(l):
     global naam
     m=l
     if cirpy.resolve(l,"formula") != None:
-        img=cirpy.Molecule(l, width=800, height=400, symbolfontsize=12)
+        img=cirpy.Molecule(l, width=1000, symbolfontsize=12)
         img=img.image_url
         naam=cirpy.resolve(l,"formula")
         
