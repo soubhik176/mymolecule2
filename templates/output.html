@@ -26,7 +26,7 @@
 
 <center>
 <div class="container">
-<h2 class="container">{{search_item}} --
+<p class="fs-2">{{search_item}} --
 {% if naam != None %}
 {% for i in naam %}
 {% if i not in "1234567890" %}
@@ -36,7 +36,7 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-</h2>
+</p>
 {% if table != None %}
 {% if listed==True %}
 <a  href="{{ url_for('removemark', date_time=date_time , place='output' ) }}">
