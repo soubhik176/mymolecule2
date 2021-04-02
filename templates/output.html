@@ -59,11 +59,7 @@
 </div>
 
 </center>
-<center>
-    {% if "." in image %}
-	<img src={{image}}/>
-    {% endif %}
-</center>
+
 
 
 <br>
@@ -99,6 +95,12 @@
 {% endif %}
 </center>
 <br>
+<center>
+    {% if "." in image %}
+    <img src={{image}}/>
+    {% endif %}
+</center>
+
 {% if mass_number != None %}
 <h2 class="container text-center">
 	Molecular Mass = 
