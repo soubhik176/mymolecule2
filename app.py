@@ -305,7 +305,7 @@ def molecule(l):
 end of table creator
 """
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']= "sqlite:///mymolecule.db"
+app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://sql6403019:FWjDIxz3zN@sql6.freesqldatabase.com:3306/sql6403019"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db = SQLAlchemy(app)
 app.secret_key = "abc"  
