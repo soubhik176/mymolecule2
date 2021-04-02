@@ -7,6 +7,19 @@ Sign In -
 {% block body %}
 <br><br><br> 
 
+{% if alert == True %}
+<div class="alert alert-warning alert-dismissible fade show container" role="alert">
+  <strong>Invalid credentials!</strong> Email doesn't exist or password is wrong!
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert==False %}
+<div class="alert alert-warning alert-dismissible fade show container" role="alert">
+  <strong>Verification link sent!</strong> Please check your email. Click on the link sent to verify your email. 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+
 <form class="container" method="post">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
