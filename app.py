@@ -12,7 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
 from email.mime.text import MIMEText
-
+from sqlalchemy.dialects.mysql import LONGTEXT
 """
 conn=sqlite3.connect('mymolecule.db')
 c=conn.cursor()
@@ -203,7 +203,7 @@ def molecule(l):
     global naam
     m=l
     if cirpy.resolve(l,"formula") != None:
-        img=cirpy.Molecule(l, width=400, height=200, symbolfontsize=12)
+        img=cirpy.Molecule(l, width=1000, height=1000, symbolfontsize=12)
         img=img.image_url
         naam=cirpy.resolve(l,"formula")
         
@@ -305,7 +305,8 @@ def molecule(l):
 end of table creator
 """
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://sql6403019:FWjDIxz3zN@sql6.freesqldatabase.com:3306/sql6403019"
+#app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://sql6403019:FWjDIxz3zN@sql6.freesqldatabase.com:3306/sql6403019"
+app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://uaXrEytddV:y3jzavA3RC@remotemysql.com:3306/uaXrEytddV"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db = SQLAlchemy(app)
 app.secret_key = "abc"  
@@ -322,8 +323,8 @@ class Users(db.Model):
 class Bookmarks(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(200), nullable = False)
-    bookmark_list = db.Column(db.String(100000), nullable = True)
-
+    #bookmark_list = db.Column(db.String(21844), nullable = True)
+    bookmark_list = db.Column(db.TEXT, nullable = True)
 
 class Signups(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
@@ -395,13 +396,32 @@ def email_sender(process,email,res=code_gen()):
 	<h2>
 	<a href="https://my-molecule2.herokuapp.com/{y}/{x}/{z}"> verification link</a>
 	</h2>
-	<center>
+	</center>
 	""".format(y=y,x=email,z= res)
 	msg=MIMEText(message, 'html')
 	msg['Subject']= y+" "+"Mymolecule"
 	server.sendmail('soubhik176@gmail.com',email, msg.as_string())
 	return res
 
+
+
+def feed_sender(email, feed):
+
+
+	server = smtplib.SMTP("smtp.gmail.com",587)
+	server.ehlo() # Can be omitted
+	server.starttls() # Secure the connection
+	server.login('sahisoubhik@gmail.com',"soubhiksahihai")
+	message = u"""
+	<center>
+	{email}<br><br>
+	{feed}
+	</center>
+	""".format(feed=feed, email=email)
+	msg=MIMEText(message, 'html')
+	msg['Subject']="Mymolecule feedback -- "+email
+	server.sendmail('soubhik176@gmail.com','hellosoubhik@protonmail.com', msg.as_string())
+	
 
 
 
@@ -718,7 +738,22 @@ def verification(email, verification_code):
 
 
 
+@app.route('/feedback', methods=["POST", "GET"])
+def feedback():
 
+
+	if request.method == "POST" :
+		feed=request.form['feedback']
+		email=request.form['email']
+		if feed.strip() == "" or email.strip() == "":
+			return render_template('feedback.html', alert=True)
+		else:
+			feed_sender(email=email, feed= feed)
+			return render_template('feedback.html', alert=False)
+
+
+	else:
+		return render_template('feedback.html')
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
