@@ -12,7 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
 from email.mime.text import MIMEText
-
+from sqlalchemy.dialects.mysql import LONGTEXT
 """
 conn=sqlite3.connect('mymolecule.db')
 c=conn.cursor()
@@ -305,7 +305,8 @@ def molecule(l):
 end of table creator
 """
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://sql6403019:FWjDIxz3zN@sql6.freesqldatabase.com:3306/sql6403019"
+#app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://sql6403019:FWjDIxz3zN@sql6.freesqldatabase.com:3306/sql6403019"
+app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://uaXrEytddV:y3jzavA3RC@remotemysql.com:3306/uaXrEytddV"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db = SQLAlchemy(app)
 app.secret_key = "abc"  
@@ -322,8 +323,8 @@ class Users(db.Model):
 class Bookmarks(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(200), nullable = False)
-    bookmark_list = db.Column(db.String(100000), nullable = True)
-
+    #bookmark_list = db.Column(db.String(21844), nullable = True)
+    bookmark_list = db.Column(db.TEXT, nullable = True)
 
 class Signups(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
