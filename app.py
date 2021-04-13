@@ -742,20 +742,25 @@ def verification(email, verification_code):
 
 @app.route('/feedback', methods=["POST", "GET"])
 def feedback():
+	present=False
+	if "user" in session:
+		present=True
 
 
 	if request.method == "POST" :
 		feed=request.form['feedback']
 		email=request.form['email']
+		if "user" in session:
+			email=session["user"]
 		if feed.strip() == "" or email.strip() == "":
-			return render_template('feedback.html', alert=True)
+			return render_template('feedback.html',present=present, alert=True )
 		else:
 			feed_sender(email=email, feed= feed)
-			return render_template('feedback.html', alert=False)
+			return render_template('feedback.html',present=present, alert=False )
 
 
 	else:
-		return render_template('feedback.html')
+		return render_template('feedback.html', present=present)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

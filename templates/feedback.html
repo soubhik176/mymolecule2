@@ -22,7 +22,11 @@ Feedback -
 <form method= "post">
    <div class="mb-3 container">
     <label for="exampleInputEmail1" class="form-label ">Email address</label>
+    {% if present == True %} 
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" readonly value={{ session.user }} >
+    {% elif present==False %}
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+    {% endif %}
     
   </div>
 <div class="mb-3 container">
