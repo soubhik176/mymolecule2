@@ -39,7 +39,7 @@
 
 <span class="navbar-text">
           Hi, 
-         {{ session.name }}
+         {{ session.name }}	&nbsp
       </span><a class="btn btn-primary float-right" href="{{ url_for('signout') }}" role="button">Sign Out</a>
 {% else %}
 <a class="btn btn-primary float-right" href="{{ url_for('signin') }}" role="button">Sign In</a>
