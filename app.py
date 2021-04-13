@@ -307,6 +307,7 @@ end of table creator
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://sql6403019:FWjDIxz3zN@sql6.freesqldatabase.com:3306/sql6403019"
 app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://uaXrEytddV:y3jzavA3RC@remotemysql.com:3306/uaXrEytddV"
+#app.config['SQLALCHEMY_DATABASE_URI']= "mysql+pymysql://hellosoubhik:soubhikji@hellosoubhik.mysql.pythonanywhere-services.com:3306/mydatabase"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db = SQLAlchemy(app)
 app.secret_key = "abc"  
