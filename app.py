@@ -13,6 +13,7 @@ from datetime import datetime
 import json
 from email.mime.text import MIMEText
 from sqlalchemy.dialects.mysql import LONGTEXT
+import pubchempy as pcp
 """
 conn=sqlite3.connect('mymolecule.db')
 c=conn.cursor()
@@ -198,6 +199,16 @@ def composition(l):
 
 naam=""
 img=""
+'''
+def pcpimg(name):
+
+	try:
+		pcp.download('PNG', 'static\\image.png', name, 'name', image_size='1000x1000', overwrite=True)
+		img= url_for('static', filename='image.png')
+		return img
+	except:
+		return False
+'''
 def molecule(l):
     global img
     global naam
@@ -205,6 +216,11 @@ def molecule(l):
     if cirpy.resolve(l,"formula") != None:
         img=cirpy.Molecule(l, width=1000, height=1000, symbolfontsize=12)
         img=img.image_url
+        '''
+        if pcpimg(l) != False:
+        	img=str(pcpimg(l))
+        '''
+        
         naam=cirpy.resolve(l,"formula")
         
         l=cirpy.resolve(l,"formula")
@@ -300,6 +316,8 @@ def molecule(l):
 
     m.append(total)
     return m
+
+
 
 """
 end of table creator
@@ -433,10 +451,14 @@ def index():
 	global naam
 	global img
 
+	
 	if 'search_item' in session:
 		search_item=session['search_item']
 		session.pop('search_item')
 		if search_item.strip() != "":
+			'''
+			if pcpimg(search_item) != False:
+				img= url_for('static', filename='image.png')'''
 			table=molecule(search_item)
 			mass_number=None
 			if table != None:
@@ -464,6 +486,10 @@ def index():
 	if request.method == "POST":
 		search_item=request.form["search_item"]
 		if search_item.strip() != "":
+			'''
+			if pcpimg(search_item) != False:
+				img= url_for('static', filename='image.png')
+				'''
 			table=molecule(search_item)
 			mass_number=None
 			if table != None:
