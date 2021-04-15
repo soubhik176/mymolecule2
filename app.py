@@ -433,10 +433,10 @@ def feed_sender(email, feed):
 	server.starttls() # Secure the connection
 	server.login('sahisoubhik@gmail.com',"soubhiksahihai")
 	message = u"""
-	<center>
+	
 	{email}<br><br>
 	{feed}
-	</center>
+	
 	""".format(feed=feed, email=email)
 	msg=MIMEText(message, 'html')
 	msg['Subject']="Mymolecule feedback -- "+email
